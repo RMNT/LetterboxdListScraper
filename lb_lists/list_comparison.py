@@ -279,6 +279,7 @@ def add_watched(movie: str, year: str, folder: str, user: str) -> None:
 
 def get_to_watch(
     watched: list,
+    folder: str,
     exclude: dict = {"False": None},
     add_lists: list = [],
     more_than: int = 0,
@@ -290,7 +291,9 @@ def get_to_watch(
     for w in watched:
         if w not in exclude:
             l = [w] + [f"{al}.txt" for al in add_lists]
-            iner = compare_lists(l, watched=bool(exclude), watched_list=watched_list)
+            iner = compare_lists(
+                l, folder, watched=bool(exclude), watched_list=watched_list
+            )
             if len(iner) > 0:
                 for i in iner:
                     movies_count[i] += 1
