@@ -7,6 +7,21 @@ import random
 import os
 
 
+def create_ignore_file(empty_lists, folder):
+    path = f'gdrive/MyDrive/{folder}/{empty_lists}.txt'
+    
+    if not os.path.exists(path):
+      with open(path, 'w') as f:
+        pass
+
+
+def remove_ignore_file(empty_lists, folder):
+    path = f'gdrive/MyDrive/{folder}/{empty_lists}.txt'
+
+    if os.path.exists(path):
+        os.remove(path)
+
+
 def conn_to_drive(remount: bool = False) -> None:
     """
     Connects user to Google drive. After running the function the user needs to
@@ -280,6 +295,7 @@ def add_watched(movie: str, year: str, folder: str, user: str) -> None:
 def get_to_watch(
     watched: list,
     folder: str,
+    empty_file: str,
     exclude: dict = {"False": None},
     add_lists: list = [],
     more_than: int = 0,
@@ -287,6 +303,9 @@ def get_to_watch(
     movies_count = defaultdict(int)
     exclude_key = next(iter(exclude.keys()), None)
     watched_list = exclude.get(exclude_key, []) + ".txt"
+
+    exclude = _read_from_file(empty_file)
+    new_exclude = []
 
     for w in watched:
         if w not in exclude:
@@ -298,7 +317,13 @@ def get_to_watch(
                 for i in iner:
                     movies_count[i] += 1
             else:
-                print(w)
+                new_exclude.append(w)
+
+    with open(f'gdrive/MyDrive/{folder}/{empty_file}.txt', 'w+') as f:
+        for ne in new_exclude:
+            f.write(f'{ne}\n')
+
+                
 
     movies_dict = dict(
         sorted(movies_count.items(), key=lambda item: item[1], reverse=True)
