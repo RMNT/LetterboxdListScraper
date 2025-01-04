@@ -1,10 +1,27 @@
 from google.colab import drive
 import requests
 from bs4 import BeautifulSoup
-from collections import defaultdict
+from collections import defaultdict, Counter
 import time
 import random
 import os
+import operator
+
+
+def others_watched(l:list, not_in:list, more_than:int=0):
+  movies = []
+  for elem in l:
+    temp = _read_list(elem)
+    movies.extend(temp)
+  d = dict(Counter(movies))
+  d = sorted_dict = dict(sorted(d.items(), key=operator.itemgetter(1), reverse=True))
+  if more_than != 0:
+    d = dict((k, v) for k, v in d.items() if v > more_than)
+
+  seen = _read_list(not_in)
+  d = {k:v for k,v in d.items() if k not in seen}
+
+  return d
 
 
 def create_ignore_file(empty_lists, folder):
