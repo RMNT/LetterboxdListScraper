@@ -304,6 +304,7 @@ def get_to_watch(
     exclude_key = next(iter(exclude.keys()), None)
     watched_list = exclude.get(exclude_key, []) + ".txt"
 
+    create_ignore_file(empty_file, folder)
     exclude = _read_from_file(empty_file, folder)
     new_exclude = []
 
