@@ -419,7 +419,7 @@ def _read_list(file_name, folder):
 def _read_from_file(file_name: str, folder: str):
     if ".txt" not in file_name:
         file_name += ".txt"
-    with open(f"{file_name}", "r") as f:
+    with open(f"gdrive/MyDrive/{folder}/{file_name}", "r") as f:
         movies = f.read().split("\n")
     return movies
 
