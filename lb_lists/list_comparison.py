@@ -8,32 +8,32 @@ import os
 import operator
 
 
-def others_watched(l:list, not_in:list, more_than:int=0):
-  movies = []
-  for elem in l:
-    temp = _read_list(elem)
-    movies.extend(temp)
-  d = dict(Counter(movies))
-  d = sorted_dict = dict(sorted(d.items(), key=operator.itemgetter(1), reverse=True))
-  if more_than != 0:
-    d = dict((k, v) for k, v in d.items() if v > more_than)
+def others_watched(l: list, not_in: list, more_than: int = 0):
+    movies = []
+    for elem in l:
+        temp = _read_list(elem)
+        movies.extend(temp)
+    d = dict(Counter(movies))
+    d = sorted_dict = dict(sorted(d.items(), key=operator.itemgetter(1), reverse=True))
+    if more_than != 0:
+        d = dict((k, v) for k, v in d.items() if v > more_than)
 
-  seen = _read_list(not_in)
-  d = {k:v for k,v in d.items() if k not in seen}
+    seen = _read_list(not_in)
+    d = {k: v for k, v in d.items() if k not in seen}
 
-  return d
+    return d
 
 
 def create_ignore_file(empty_lists, folder):
-    path = f'gdrive/MyDrive/{folder}/{empty_lists}.txt'
-    
+    path = f"gdrive/MyDrive/{folder}/{empty_lists}.txt"
+
     if not os.path.exists(path):
-      with open(path, 'w') as f:
-        pass
+        with open(path, "w") as f:
+            pass
 
 
 def remove_ignore_file(empty_lists, folder):
-    path = f'gdrive/MyDrive/{folder}/{empty_lists}.txt'
+    path = f"gdrive/MyDrive/{folder}/{empty_lists}.txt"
 
     if os.path.exists(path):
         os.remove(path)
@@ -65,8 +65,10 @@ def movie_strip(movie: str) -> str:
       movie - str, movie title without spaces.
     """
 
-    movie = movie.strip()
-    movie = movie.lstrip()
+    while movie[0] == " ":
+        movie = movie.lstrip()
+    while movie[-1] == " ":
+        movie = movie.strip()
 
     return movie
 
@@ -300,7 +302,7 @@ def add_watched(movie: str, year: str, folder: str, user: str) -> None:
     watchlist = f"gdrive/MyDrive/{folder}/Watched | {user}.txt"
 
     if os.path.exists(watchlist):
-        watchedl_movies = _read_list(watchlist)
+        watchedl_movies = _read_list(watchlist, folder)
         if movie_year in watchedl_movies:
             watchedl_movies.remove(movie_year)
 
@@ -337,11 +339,9 @@ def get_to_watch(
             else:
                 new_exclude.append(w)
 
-    with open(f'gdrive/MyDrive/{folder}/{empty_file}.txt', 'w+') as f:
+    with open(f"gdrive/MyDrive/{folder}/{empty_file}.txt", "w+") as f:
         for ne in new_exclude:
-            f.write(f'{ne}\n')
-
-                
+            f.write(f"{ne}\n")
 
     movies_dict = dict(
         sorted(movies_count.items(), key=lambda item: item[1], reverse=True)
