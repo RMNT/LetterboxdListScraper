@@ -421,7 +421,9 @@ def _read_from_file(file_name: str, folder: str):
         file_name = file_name.split("/")[-1]
     if ".txt" not in file_name:
         file_name += ".txt"
-    with open(f"gdrive/MyDrive/{folder}/{file_name}", "r") as f:
+    link = f"gdrive/MyDrive/{folder}/{file_name}"
+    print(link)
+    with open(link, "r") as f:
         movies = f.read().split("\n")
     return movies
 
