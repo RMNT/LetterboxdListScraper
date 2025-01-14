@@ -417,6 +417,8 @@ def _read_list(file_name, folder):
 
 
 def _read_from_file(file_name: str, folder: str):
+    if "/" in file_name:
+        file_name = file_name.split("/")[-1]
     if ".txt" not in file_name:
         file_name += ".txt"
     with open(f"gdrive/MyDrive/{folder}/{file_name}", "r") as f:
