@@ -292,11 +292,13 @@ def get_all_files(folder: str, exclude: list = []):
 
 def add_watched(movie: str, year: str, folder: str, user: str) -> None:
     movie = movie_strip(movie)
-
+f
     movie_year = f"{movie}, {year}"
     title = f"Watched | {user}"
 
-    with open(f"gdrive/MyDrive/{folder}/{title}.txt", "a") as f:
+    link = f"gdrive/MyDrive/{folder}/{title}.txt"
+
+    with open(link, "a") as f:
         f.write(f"{movie_year}\n")
 
     watchlist = f"gdrive/MyDrive/{folder}/Watchlist | {user}.txt"
@@ -306,7 +308,7 @@ def add_watched(movie: str, year: str, folder: str, user: str) -> None:
         if movie_year in watchedl_movies:
             watchedl_movies.remove(movie_year)
 
-        with open(f"gdrive/MyDrive/{folder}/Watched | {user}.txt", "w") as f:
+        with open(watchlist, "w") as f:
             for wlm in watchedl_movies:
                 f.write(f"{wlm}\n")
 
@@ -422,7 +424,7 @@ def _read_from_file(file_name: str, folder: str):
     if ".txt" not in file_name:
         file_name += ".txt"
     link = f"gdrive/MyDrive/{folder}/{file_name}"
-    print(link)
+
     with open(link, "r") as f:
         movies = f.read().split("\n")
     return movies
