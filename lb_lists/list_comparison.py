@@ -299,7 +299,7 @@ def add_watched(movie: str, year: str, folder: str, user: str) -> None:
     with open(f"gdrive/MyDrive/{folder}/{title}.txt", "a") as f:
         f.write(f"{movie_year}\n")
 
-    watchlist = f"gdrive/MyDrive/{folder}/Watched | {user}.txt"
+    watchlist = f"gdrive/MyDrive/{folder}/Watchlist | {user}.txt"
 
     if os.path.exists(watchlist):
         watchedl_movies = _read_list(watchlist, folder)
