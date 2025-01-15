@@ -292,7 +292,6 @@ def get_all_files(folder: str, exclude: list = []):
 
 def add_watched(movie: str, year: str, folder: str, user: str) -> None:
     movie = movie_strip(movie)
-f
     movie_year = f"{movie}, {year}"
     title = f"Watched | {user}"
 
